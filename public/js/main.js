@@ -14,15 +14,17 @@ function get_cookie(cookie_name) {
   const VIEWSTATE = parseInt(get_cookie('viewstate')) || 640;
   document.body.style.width = VIEWSTATE + 'px';
   document.body.style.height = VIEWSTATE + 'px';
-  
 
   window.nzxt = {
     v1: {
       onMonitoringDataUpdate: (data) => {
         const { cpus, gpus, ram } = data;
-        update_cpu(cpus[0].temperature);
+       /* update_cpu(cpus[0].temperature);
         update_gpu(gpus[0].temperature);
-        update_ram(ram);
+        update_ram(ram);*/
+
+        
+        update_gpu(gpus[0].inUse)
       },
     },
   };
@@ -37,6 +39,7 @@ function get_cookie(cookie_name) {
     gpu_temp.innerHTML = `${Math.round(temp)}°C`;
   }
   
+
   const ram_usage = document.getElementById('ram_usage');
   function update_ram(ram) {
     // Response is in Mebibytes, convert the 'inUse' value to gigabytes. || https://github.com/NZXTCorp/web-integrations-types/blob/main/v1/index.d.ts
